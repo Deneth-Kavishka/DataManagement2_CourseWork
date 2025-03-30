@@ -1,0 +1,112 @@
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[98,20] cannot find symbol
+  symbol:   method getFarmerId()
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[99,76] cannot find symbol
+  symbol:   method getFarmerId()
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[100,66] cannot find symbol
+  symbol:   method getIsFarmer()
+  location: class com.urbanfood.api.models.oracle.User
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[117,76] incompatible types: java.lang.String cannot be converted to java.math.BigDecimal
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[118,36] cannot find symbol
+  symbol:   method setCategoryId(java.lang.Long)
+  location: variable existingProduct of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[147,51] no suitable constructor found for BigDecimal(java.math.BigDecimal)
+    constructor java.math.BigDecimal.BigDecimal(char[]) is not applicable
+      (argument mismatch; java.math.BigDecimal cannot be converted to char[])
+    constructor java.math.BigDecimal.BigDecimal(java.lang.String) is not applicable
+      (argument mismatch; java.math.BigDecimal cannot be converted to java.lang.String)
+    constructor java.math.BigDecimal.BigDecimal(double) is not applicable
+      (argument mismatch; java.math.BigDecimal cannot be converted to double)
+    constructor java.math.BigDecimal.BigDecimal(java.math.BigInteger) is not applicable
+      (argument mismatch; java.math.BigDecimal cannot be converted to java.math.BigInteger)
+    constructor java.math.BigDecimal.BigDecimal(int) is not applicable
+      (argument mismatch; java.math.BigDecimal cannot be converted to int)
+    constructor java.math.BigDecimal.BigDecimal(long) is not applicable
+      (argument mismatch; java.math.BigDecimal cannot be converted to long)
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[149,34] cannot find symbol
+  symbol:   method getCategoryId()
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[150,32] cannot find symbol
+  symbol:   method getFarmerId()
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[157,20] cannot find symbol
+  symbol:   method getFarmerId()
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[158,44] cannot find symbol
+  symbol:   method getFarmerId()
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[181,74] incompatible types: bad type in conditional expression
+    java.lang.String cannot be converted to java.math.BigDecimal
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[183,16] cannot find symbol
+  symbol:   method setCategoryId(java.lang.Long)
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[184,16] cannot find symbol
+  symbol:   method setFarmerId(java.lang.Long)
+  location: variable product of type com.urbanfood.api.models.oracle.Product
+[INFO] 13 errors
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.886 s
+[INFO] Finished at: 2025-03-29T22:05:01+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project api: Compilation failure: Compilation failure:
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[98,20] cannot find symbol
+[ERROR]   symbol:   method getFarmerId()
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[99,76] cannot find symbol
+[ERROR]   symbol:   method getFarmerId()
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[100,66] cannot find symbol
+[ERROR]   symbol:   method getIsFarmer()
+[ERROR]   location: class com.urbanfood.api.models.oracle.User
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[117,76] incompatible types: java.lang.String cannot be converted to java.math.BigDecimal
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[118,36] cannot find symbol
+[ERROR]   symbol:   method setCategoryId(java.lang.Long)
+[ERROR]   location: variable existingProduct of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[147,51] no suitable constructor found for BigDecimal(java.math.BigDecimal)
+[ERROR]     constructor java.math.BigDecimal.BigDecimal(char[]) is not applicable
+[ERROR]       (argument mismatch; java.math.BigDecimal cannot be converted to char[])
+[ERROR]     constructor java.math.BigDecimal.BigDecimal(java.lang.String) is not applicable
+[ERROR]       (argument mismatch; java.math.BigDecimal cannot be converted to java.lang.String)
+[ERROR]     constructor java.math.BigDecimal.BigDecimal(double) is not applicable
+[ERROR]       (argument mismatch; java.math.BigDecimal cannot be converted to double)
+[ERROR]     constructor java.math.BigDecimal.BigDecimal(java.math.BigInteger) is not applicable
+[ERROR]       (argument mismatch; java.math.BigDecimal cannot be converted to java.math.BigInteger)
+[ERROR]     constructor java.math.BigDecimal.BigDecimal(int) is not applicable
+[ERROR]       (argument mismatch; java.math.BigDecimal cannot be converted to int)
+[ERROR]     constructor java.math.BigDecimal.BigDecimal(long) is not applicable
+[ERROR]       (argument mismatch; java.math.BigDecimal cannot be converted to long)
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[149,34] cannot find symbol
+[ERROR]   symbol:   method getCategoryId()
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[150,32] cannot find symbol
+[ERROR]   symbol:   method getFarmerId()
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[157,20] cannot find symbol
+[ERROR]   symbol:   method getFarmerId()
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[158,44] cannot find symbol
+[ERROR]   symbol:   method getFarmerId()
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[181,74] incompatible types: bad type in conditional expression
+[ERROR]     java.lang.String cannot be converted to java.math.BigDecimal
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[183,16] cannot find symbol
+[ERROR]   symbol:   method setCategoryId(java.lang.Long)
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] /C:/Users/Deneth/Desktop/Programmes/DM2 Coursework/Finalize/UrbanFoodMarket/spring-boot-backend/src/main/java/com/urbanfood/api/controllers/ProductController.java:[184,16] cannot find symbol
+[ERROR]   symbol:   method setFarmerId(java.lang.Long)
+[ERROR]   location: variable product of type com.urbanfood.api.models.oracle.Product
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+When I run mnv clean install then This error was given? Why and how to fix it
