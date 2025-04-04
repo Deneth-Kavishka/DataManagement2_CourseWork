@@ -1,0 +1,49 @@
+1:51:48 AM [express] Verifying email service...
+Email service verification failed: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2291f1deecdsm112887875ad.196 - gsmtp
+    at SMTPConnection._formatError (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._actionAUTHComplete (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:1588:34)
+    at SMTPConnection.<anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5) {
+  code: 'EAUTH',
+  response: '535-5.7.8 Username and Password not accepted. For more information, go to\n' +
+    '535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2291f1deecdsm112887875ad.196 - gsmtp',
+  responseCode: 535,
+  command: 'AUTH PLAIN'
+}
+1:51:49 AM [express] Email service configuration failed. Email features may not work correctly.
+1:51:49 AM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2:08:31 AM [express] GET /api/vendors 200 in 4ms :: [{"userId":1,"businessName":"Green Earth Farm","…
+2:08:31 AM [express] GET /api/categories 200 in 2ms :: [{"name":"Vegetables","description":"Fresh ve…
+2:08:31 AM [express] GET /api/products 200 in 5ms :: [{"name":"Organic Kale","description":"Fresh or…
+2:08:31 AM [express] GET /api/reports/popular-products 200 in 2ms :: [{"name":"Organic Kale","descri…
+2:10:41 AM [express] GET /api/products 304 in 3ms :: [{"name":"Organic Kale","description":"Fresh or…
+2:11:28 AM [express] GET /api/products 200 in 1ms :: [{"name":"Organic Apples","description":"Fresh …
+Error sending verification email: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-73970deef9dsm11517103b3a.23 - gsmtp
+    at SMTPConnection._formatError (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._actionAUTHComplete (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:1588:34)
+    at SMTPConnection.<anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) {
+  code: 'EAUTH',
+  response: '535-5.7.8 Username and Password not accepted. For more information, go to\n' +
+    '535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-73970deef9dsm11517103b3a.23 - gsmtp',
+  responseCode: 535,
+  command: 'AUTH PLAIN'
+}

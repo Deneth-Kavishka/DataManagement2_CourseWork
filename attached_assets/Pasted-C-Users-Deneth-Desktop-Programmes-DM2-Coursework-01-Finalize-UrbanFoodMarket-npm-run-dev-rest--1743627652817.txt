@@ -1,0 +1,120 @@
+C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket>npm run dev
+
+> rest-express@1.0.0 dev
+> tsx server/index.ts
+
+Using Oracle database storage
+1:39:29 AM [express] Initializing MongoDB storage...
+Oracle connection pool created
+Error creating procedures: ReferenceError: __dirname is not defined
+    at Object.createProcedures (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\oracleDb.ts:111:37)
+    at OracleStorage.setupDatabase (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\OracleStorage.ts:47:22)
+    at OracleStorage.initialize (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\OracleStorage.ts:32:18)
+    at async <anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\index.ts:62:9)  
+1:39:29 AM [express] Database storage initialized successfully
+1:39:29 AM [express] Starting database migrations...
+1:39:29 AM [express] Detected database type: oracle
+1:39:29 AM [express] Running Oracle migrations...
+1:39:29 AM [express] Failed to run Oracle migrations: ORACLE_CONNECTION_STRING environment variable is not set
+1:39:29 AM [express] Error running migrations: Error: ORACLE_CONNECTION_STRING environment variable is not set
+Database migration error: Error: ORACLE_CONNECTION_STRING environment variable is not set
+    at runOracleMigrations (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\dbMigrations.ts:56:13)
+    at async runMigrations (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\dbMigrations.ts:23:7)
+    at async <anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\index.ts:72:7)  
+1:39:29 AM [express] Verifying email service...
+Email service verification failed: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-73970e4cb02sm11409120b3a.74 - gsmtp
+    at SMTPConnection._formatError (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._actionAUTHComplete (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:1588:34)
+    at SMTPConnection.<anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5) {
+  code: 'EAUTH',
+  response: '535-5.7.8 Username and Password not accepted. For more information, go to\n' +
+    '535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-73970e4cb02sm11409120b3a.74 - gsmtp',
+  responseCode: 535,
+  command: 'AUTH PLAIN'
+}
+1:39:31 AM [express] Email service configuration failed. Email features may not work correctly.
+C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\vite.ts:74
+    throw new Error(
+          ^
+
+
+Error: Could not find the build directory: C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\public, make sure to build the client first
+    at serveStatic (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\vite.ts:74:11)        
+    at <anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\index.ts:134:5)       
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Node.js v20.17.0
+
+C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket>setup-database-windows.bat
+Setting up databases for UrbanFood...
+========================
+Oracle Database Setup
+========================
+Make sure Oracle Database is running and configured with:
+- Username: your_oracle_username
+- Password: your_oracle_password
+- Connect String: localhost:1521/your_service_name
+Running Oracle setup script...
+========================
+MongoDB Setup
+========================
+Make sure MongoDB is running on localhost:27017
+Setup complete! Your UrbanFood environment is ready.
+Press any key to continue . . .
+odMarket>npm run start
+
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+
+'NODE_ENV' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket>npm run dev 
+
+> rest-express@1.0.0 dev
+> tsx server/index.ts
+
+Using in-memory storage
+2:20:45 AM [express] Initializing MongoDB storage...
+2:20:45 AM [express] Starting database migrations...
+2:20:45 AM [express] Detected database type: oracle-mongo
+2:20:45 AM [express] Database migrations completed successfully
+2:20:45 AM [express] Verifying email service...
+Email service verification failed: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2291f1f9240sm113112045ad.236 - gsmtp
+    at SMTPConnection._formatError (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._actionAUTHComplete (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:1588:34)
+    at SMTPConnection.<anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5) {
+  code: 'EAUTH',
+  response: '535-5.7.8 Username and Password not accepted. For more information, go to\n' +
+    '535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2291f1f9240sm113112045ad.236 - gsmtp',
+  responseCode: 535,
+  command: 'AUTH PLAIN'
+}
+2:20:47 AM [express] Email service configuration failed. Email features may not work correctly.
+C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\vite.ts:74
+    throw new Error(
+          ^
+
+
+Error: Could not find the build directory: C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\public, make sure to build the client first
+    at serveStatic (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\vite.ts:74:11)        
+    at <anonymous> (C:\Users\Deneth\Desktop\Programmes\DM2 Coursework\01.Finalize\UrbanFoodMarket\server\index.ts:134:5)       
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Node.js v20.17.0
