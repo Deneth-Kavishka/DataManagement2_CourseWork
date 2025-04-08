@@ -38,8 +38,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-neutral-400 hover:text-primary transition">Home</Link></li>
-              <li><Link href="/products" className="text-neutral-400 hover:text-primary transition">Shop</Link></li>
+              <li><Link href="/" className="text-neutral-400 hover:text-primary">Home</Link></li>
+              <li><Link href="/products" className="text-neutral-400 hover:text-primary ">Shop</Link></li>
               <li><Link href="/products" className="text-neutral-400 hover:text-primary transition">Categories</Link></li>
               <li><Link href="#" className="text-neutral-400 hover:text-primary transition">Vendors</Link></li>
               <li><Link href="#" className="text-neutral-400 hover:text-primary transition">Seasonal Items</Link></li>
@@ -62,7 +62,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 text-neutral-400" />
-                <span className="text-neutral-400">123 Urban Ave, Kurunegala, Sri Lanka</span>
+                <span className="text-neutral-400">123 Urban Outlet, Kurunegala, Sri Lanka</span>
               </li>
               <li className="flex items-start">
                 <Mail className="h-5 w-5 mr-2 text-neutral-400" />

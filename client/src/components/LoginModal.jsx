@@ -91,7 +91,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 <input type="checkbox" className="rounded text-primary focus:ring-primary mr-2" />
                 <span className="text-sm text-neutral-600">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-primary hover:text-primary-dark">Forgot Password?</a>
+              <a href="/forgot-password" className="text-sm text-primary hover:text-primary-dark">Forgot Password?</a>
             </div>
             
             <button 

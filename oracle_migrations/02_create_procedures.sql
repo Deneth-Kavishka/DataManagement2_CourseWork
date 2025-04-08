@@ -19,7 +19,11 @@ BEGIN
     'CREATE_ORDER_ITEM',
     'CREATE_REVIEW',
     'UPDATE_REVIEW',
-    'DELETE_REVIEW'
+    'DELETE_REVIEW',
+    'GET_ALL_CATEGORIES',
+    'GET_ALL_PRODUCTS',
+    'GET_ALL_VENDORS',
+    'GET_ALL_ORDERS'
   )) LOOP
     EXECUTE IMMEDIATE 'DROP PROCEDURE ' || p.object_name;
   END LOOP;
@@ -27,7 +31,7 @@ EXCEPTION
   WHEN OTHERS THEN
     NULL; -- Ignore errors if procedures don't exist
 END;
-
+/
 
 -- User Operations
 
@@ -60,7 +64,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-
+/
 
 -- Update User Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_USER(
@@ -109,7 +113,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-
+/
 
 -- Verify User Procedure
 CREATE OR REPLACE PROCEDURE VERIFY_USER(
@@ -140,7 +144,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-
+/
 
 -- Category Operations
 
@@ -162,7 +166,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-
+/
 
 -- Update Category Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_CATEGORY(
@@ -197,7 +201,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-
+/
 
 -- Delete Category Procedure
 CREATE OR REPLACE PROCEDURE DELETE_CATEGORY(
@@ -225,7 +229,18 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
+/
 
+-- Get All Categories Procedure
+CREATE OR REPLACE PROCEDURE GET_ALL_CATEGORIES(
+  p_results OUT SYS_REFCURSOR
+) AS
+BEGIN
+  OPEN p_results FOR
+    SELECT * FROM CATEGORIES
+    ORDER BY NAME;
+END;
+/
 
 -- Product Operations
 
@@ -263,7 +278,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-
+/
 
 -- Update Product Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_PRODUCT(
@@ -318,7 +333,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-
+/
 
 -- Delete Product Procedure
 CREATE OR REPLACE PROCEDURE DELETE_PRODUCT(
@@ -346,7 +361,21 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
+/
 
+-- Get All Products Procedure
+CREATE OR REPLACE PROCEDURE GET_ALL_PRODUCTS(
+  p_results OUT SYS_REFCURSOR
+) AS
+BEGIN
+  OPEN p_results FOR
+    SELECT p.*, c.NAME AS CATEGORY_NAME, v.BUSINESS_NAME AS VENDOR_NAME
+    FROM PRODUCTS p
+    LEFT JOIN CATEGORIES c ON p.CATEGORY_ID = c.ID
+    LEFT JOIN VENDORS v ON p.VENDOR_ID = v.ID
+    ORDER BY p.NAME;
+END;
+/
 
 -- Vendor Operations
 
@@ -383,7 +412,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-
+/
 
 -- Update Vendor Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_VENDOR(
@@ -434,7 +463,20 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
+/
 
+-- Get All Vendors Procedure
+CREATE OR REPLACE PROCEDURE GET_ALL_VENDORS(
+  p_results OUT SYS_REFCURSOR
+) AS
+BEGIN
+  OPEN p_results FOR
+    SELECT v.*, u.USERNAME, u.EMAIL, u.FIRST_NAME, u.LAST_NAME
+    FROM VENDORS v
+    JOIN USERS u ON v.USER_ID = u.ID
+    ORDER BY v.BUSINESS_NAME;
+END;
+/
 
 -- Order Operations
 
@@ -471,7 +513,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-
+/
 
 -- Update Order Status Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_ORDER_STATUS(
@@ -504,7 +546,20 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
+/
 
+-- Get All Orders Procedure
+CREATE OR REPLACE PROCEDURE GET_ALL_ORDERS(
+  p_results OUT SYS_REFCURSOR
+) AS
+BEGIN
+  OPEN p_results FOR
+    SELECT o.*, u.USERNAME, u.EMAIL, u.FIRST_NAME, u.LAST_NAME
+    FROM ORDERS o
+    JOIN USERS u ON o.USER_ID = u.ID
+    ORDER BY o.CREATED_AT DESC;
+END;
+/
 
 -- Order Item Operations
 
@@ -532,7 +587,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-
+/
 
 -- Create convenience functions to check if records exist
 
@@ -543,7 +598,7 @@ BEGIN
   SELECT COUNT(*) INTO user_count FROM USERS WHERE ID = p_id;
   RETURN user_count;
 END;
-
+/
 
 -- Check if Product Exists
 CREATE OR REPLACE FUNCTION PRODUCT_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -552,7 +607,7 @@ BEGIN
   SELECT COUNT(*) INTO product_count FROM PRODUCTS WHERE ID = p_id;
   RETURN product_count;
 END;
-
+/
 
 -- Check if Category Exists
 CREATE OR REPLACE FUNCTION CATEGORY_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -561,7 +616,7 @@ BEGIN
   SELECT COUNT(*) INTO category_count FROM CATEGORIES WHERE ID = p_id;
   RETURN category_count;
 END;
-
+/
 
 -- Check if Vendor Exists
 CREATE OR REPLACE FUNCTION VENDOR_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -570,7 +625,7 @@ BEGIN
   SELECT COUNT(*) INTO vendor_count FROM VENDORS WHERE ID = p_id;
   RETURN vendor_count;
 END;
-
+/
 
 -- Check if Vendor Exists By User ID
 CREATE OR REPLACE FUNCTION VENDOR_EXISTS_BY_USER(p_user_id IN NUMBER) RETURN NUMBER AS
@@ -579,7 +634,7 @@ BEGIN
   SELECT COUNT(*) INTO vendor_count FROM VENDORS WHERE USER_ID = p_user_id;
   RETURN vendor_count;
 END;
-
+/
 
 -- Check if Order Exists
 CREATE OR REPLACE FUNCTION ORDER_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -588,7 +643,7 @@ BEGIN
   SELECT COUNT(*) INTO order_count FROM ORDERS WHERE ID = p_id;
   RETURN order_count;
 END;
-
+/
 
 -- Some helper procedures that will be used by the application for search capabilities
 
@@ -605,7 +660,7 @@ BEGIN
       UPPER(NAME) LIKE '%' || UPPER(p_query) || '%'
       OR UPPER(DESCRIPTION) LIKE '%' || UPPER(p_query) || '%';
 END;
-
+/
 
 -- Get Products By Category Procedure
 CREATE OR REPLACE PROCEDURE GET_PRODUCTS_BY_CATEGORY(
@@ -618,7 +673,7 @@ BEGIN
     FROM PRODUCTS
     WHERE CATEGORY_ID = p_category_id;
 END;
-
+/
 
 -- Get Products By Vendor Procedure
 CREATE OR REPLACE PROCEDURE GET_PRODUCTS_BY_VENDOR(
@@ -631,7 +686,7 @@ BEGIN
     FROM PRODUCTS
     WHERE VENDOR_ID = p_vendor_id;
 END;
-
+/
 
 -- Get Orders By User Procedure
 CREATE OR REPLACE PROCEDURE GET_ORDERS_BY_USER(
@@ -645,7 +700,7 @@ BEGIN
     WHERE USER_ID = p_user_id
     ORDER BY CREATED_AT DESC;
 END;
-
+/
 
 -- Get Order Items By Order Procedure
 CREATE OR REPLACE PROCEDURE GET_ORDER_ITEMS_BY_ORDER(
@@ -659,6 +714,6 @@ BEGIN
     JOIN PRODUCTS p ON i.PRODUCT_ID = p.ID
     WHERE i.ORDER_ID = p_order_id;
 END;
-
+/
 
 COMMIT;

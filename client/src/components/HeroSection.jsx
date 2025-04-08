@@ -18,7 +18,7 @@ const HeroSection = () => {
                 Shop Now
               </button>
             </Link>
-            <Link href="#">
+            <Link href="/register?vendor=true">
               <button className="bg-transparent border-2 border-white text-white font-medium py-3 px-6 rounded-md hover:bg-white/10 transition">
                 Become a Vendor
               </button>
