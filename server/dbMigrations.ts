@@ -3,6 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import { log } from './vite';
 
+
 // Load environment variables
 dotenv.config();
 

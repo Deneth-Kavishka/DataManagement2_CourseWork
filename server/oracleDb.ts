@@ -2,6 +2,7 @@ import oracledb from 'oracledb';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Load environment variables
 dotenv.config();
@@ -108,9 +109,10 @@ async function close() {
 async function createProcedures() {
   try {
     // In ES modules, we use import.meta.url instead of __dirname
-    const currentFilePath = new URL(import.meta.url).pathname;
+    const currentFilePath = fileURLToPath(import.meta.url); // decode %20 to space
     const currentDir = path.dirname(currentFilePath);
     const procedureFile = path.join(currentDir, '..', 'oracle_migrations', '02_create_procedures.sql');
+    console.log("Looking for procedure file at:", procedureFile);
     
     if (!fs.existsSync(procedureFile)) {
       console.error('Procedure migration file not found');

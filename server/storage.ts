@@ -1,7 +1,7 @@
 import { users, type User, type InsertUser, categories, type Category, type InsertCategory, products, type Product, type InsertProduct, vendors, type Vendor, type InsertVendor, orders, type Order, type InsertOrder, orderItems, type OrderItem, type InsertOrderItem, type Review } from "@shared/schema";
 import { mongoStorage } from './MongoStorage';
 import { oracleStorage } from './OracleStorage';
-import { DatabaseStorage } from './DatabaseStorage';
+//import { DatabaseStorage } from './DatabaseStorage';
 
 // Interface for all storage operations
 export interface IStorage {
@@ -104,7 +104,7 @@ export class MemStorage implements IStorage {
       { name: "Dairy Products", description: "Fresh dairy products from local producers in Sri Lanka", imageUrl: "https://images.unsplash.com/photo-1628088062854-d1870b4553da" },
       { name: "Baked Goods", description: "Authentic Sri Lankan baked goods and sweets", imageUrl: "https://images.unsplash.com/photo-1509440159596-0249088772ff" },
       { name: "Handmade Crafts", description: "Traditional and modern Sri Lankan handmade items", imageUrl: "https://images.unsplash.com/photo-1464195244916-405fa0a82545" },
-      { name: "Seasonal Items", description: "Festive and seasonal products from across Sri Lanka", imageUrl: "https://images.unsplash.com/photo-1476525913996-bba9ab3912d9" }
+      { name: "Seasonal Items", description: "Festive and seasonal products from across Sri Lanka", imageUrl: "https://i.mscwlns.co/media/misc/others/download_1737700929635_Untitled-design-2022-01-24T193825.271--1-_d6t4dt.jpg" }
     ];
   
     categories.forEach(category => this.createCategory(category));
@@ -127,8 +127,8 @@ export class MemStorage implements IStorage {
         description: "Organic vegetables grown in the cool climate of Nuwara Eliya with sustainable farming practices.",
         location: "Nuwara Eliya",
         tags: ["Organic", "Vegetables", "Cool Climate"],
-        logoUrl: "https://images.unsplash.com/photo-1595923533867-9a5b4a5142d8",
-        bannerUrl: "https://images.unsplash.com/photo-1595923533867-9a5b4a5142d8",
+        logoUrl: "https://media.istockphoto.com/id/1251268131/photo/senior-man-with-bunch-of-freshly-harvested-carrots.jpg?s=612x612&w=0&k=20&c=N-xOciVFINYbPDf0FzV1tjwtfnc7gYEMW2TpW8h3bCg=",
+        bannerUrl: "https://media.istockphoto.com/id/1251268131/photo/senior-man-with-bunch-of-freshly-harvested-carrots.jpg?s=612x612&w=0&k=20&c=N-xOciVFINYbPDf0FzV1tjwtfnc7gYEMW2TpW8h3bCg=",
         rating: 4.9
       },
       {

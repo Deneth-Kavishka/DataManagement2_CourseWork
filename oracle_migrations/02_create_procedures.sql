@@ -27,7 +27,7 @@ EXCEPTION
   WHEN OTHERS THEN
     NULL; -- Ignore errors if procedures don't exist
 END;
-/
+
 
 -- User Operations
 
@@ -53,14 +53,14 @@ BEGIN
     p_username, p_password, p_email, p_first_name, p_last_name, 
     p_role, p_is_verified, p_verification_token, p_reset_token, p_reset_token_expires
   ) RETURNING ID INTO p_user_id;
-  
-  COMMIT;
+
+  COMMIT; -- Optional
 EXCEPTION
   WHEN OTHERS THEN
     ROLLBACK;
     RAISE;
 END;
-/
+
 
 -- Update User Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_USER(
@@ -109,7 +109,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Verify User Procedure
 CREATE OR REPLACE PROCEDURE VERIFY_USER(
@@ -140,7 +140,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Category Operations
 
@@ -162,7 +162,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-/
+
 
 -- Update Category Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_CATEGORY(
@@ -197,7 +197,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Delete Category Procedure
 CREATE OR REPLACE PROCEDURE DELETE_CATEGORY(
@@ -225,7 +225,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Product Operations
 
@@ -263,7 +263,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-/
+
 
 -- Update Product Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_PRODUCT(
@@ -318,7 +318,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Delete Product Procedure
 CREATE OR REPLACE PROCEDURE DELETE_PRODUCT(
@@ -346,7 +346,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Vendor Operations
 
@@ -383,7 +383,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-/
+
 
 -- Update Vendor Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_VENDOR(
@@ -434,7 +434,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Order Operations
 
@@ -471,7 +471,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-/
+
 
 -- Update Order Status Procedure
 CREATE OR REPLACE PROCEDURE UPDATE_ORDER_STATUS(
@@ -504,7 +504,7 @@ EXCEPTION
     p_success := 0;
     RAISE;
 END;
-/
+
 
 -- Order Item Operations
 
@@ -532,7 +532,7 @@ EXCEPTION
     ROLLBACK;
     RAISE;
 END;
-/
+
 
 -- Create convenience functions to check if records exist
 
@@ -543,7 +543,7 @@ BEGIN
   SELECT COUNT(*) INTO user_count FROM USERS WHERE ID = p_id;
   RETURN user_count;
 END;
-/
+
 
 -- Check if Product Exists
 CREATE OR REPLACE FUNCTION PRODUCT_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -552,7 +552,7 @@ BEGIN
   SELECT COUNT(*) INTO product_count FROM PRODUCTS WHERE ID = p_id;
   RETURN product_count;
 END;
-/
+
 
 -- Check if Category Exists
 CREATE OR REPLACE FUNCTION CATEGORY_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -561,7 +561,7 @@ BEGIN
   SELECT COUNT(*) INTO category_count FROM CATEGORIES WHERE ID = p_id;
   RETURN category_count;
 END;
-/
+
 
 -- Check if Vendor Exists
 CREATE OR REPLACE FUNCTION VENDOR_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -570,7 +570,7 @@ BEGIN
   SELECT COUNT(*) INTO vendor_count FROM VENDORS WHERE ID = p_id;
   RETURN vendor_count;
 END;
-/
+
 
 -- Check if Vendor Exists By User ID
 CREATE OR REPLACE FUNCTION VENDOR_EXISTS_BY_USER(p_user_id IN NUMBER) RETURN NUMBER AS
@@ -579,7 +579,7 @@ BEGIN
   SELECT COUNT(*) INTO vendor_count FROM VENDORS WHERE USER_ID = p_user_id;
   RETURN vendor_count;
 END;
-/
+
 
 -- Check if Order Exists
 CREATE OR REPLACE FUNCTION ORDER_EXISTS(p_id IN NUMBER) RETURN NUMBER AS
@@ -588,7 +588,7 @@ BEGIN
   SELECT COUNT(*) INTO order_count FROM ORDERS WHERE ID = p_id;
   RETURN order_count;
 END;
-/
+
 
 -- Some helper procedures that will be used by the application for search capabilities
 
@@ -605,7 +605,7 @@ BEGIN
       UPPER(NAME) LIKE '%' || UPPER(p_query) || '%'
       OR UPPER(DESCRIPTION) LIKE '%' || UPPER(p_query) || '%';
 END;
-/
+
 
 -- Get Products By Category Procedure
 CREATE OR REPLACE PROCEDURE GET_PRODUCTS_BY_CATEGORY(
@@ -618,7 +618,7 @@ BEGIN
     FROM PRODUCTS
     WHERE CATEGORY_ID = p_category_id;
 END;
-/
+
 
 -- Get Products By Vendor Procedure
 CREATE OR REPLACE PROCEDURE GET_PRODUCTS_BY_VENDOR(
@@ -631,7 +631,7 @@ BEGIN
     FROM PRODUCTS
     WHERE VENDOR_ID = p_vendor_id;
 END;
-/
+
 
 -- Get Orders By User Procedure
 CREATE OR REPLACE PROCEDURE GET_ORDERS_BY_USER(
@@ -645,7 +645,7 @@ BEGIN
     WHERE USER_ID = p_user_id
     ORDER BY CREATED_AT DESC;
 END;
-/
+
 
 -- Get Order Items By Order Procedure
 CREATE OR REPLACE PROCEDURE GET_ORDER_ITEMS_BY_ORDER(
@@ -659,6 +659,6 @@ BEGIN
     JOIN PRODUCTS p ON i.PRODUCT_ID = p.ID
     WHERE i.ORDER_ID = p_order_id;
 END;
-/
+
 
 COMMIT;
