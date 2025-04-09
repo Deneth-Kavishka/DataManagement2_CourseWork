@@ -204,6 +204,7 @@ export class OracleStorage implements IStorage {
             p_password_hash => :passwordHash,
             p_first_name => :firstName,
             p_last_name => :lastName,
+            p_phone_number => :lastName,
             p_role => :role,
             p_user_id => p_user_id
           );
@@ -216,6 +217,7 @@ export class OracleStorage implements IStorage {
           passwordHash: insertUser.password,
           firstName: insertUser.firstName,
           lastName: insertUser.lastName,
+          phoneNumber: insertUser.phoneNumber,
           role: insertUser.role || 'customer',
           user_id: { dir: oracleDb.BIND_OUT, type: oracleDb.NUMBER }
         }

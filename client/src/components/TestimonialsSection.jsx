@@ -1,25 +1,25 @@
 const TestimonialsSection = () => {
-  // In a real application, this data would come from an API
+  // In a application, this data want come from an API
   const testimonials = [
     {
       id: 1,
       text: "I've been shopping at UrbanFood for 6 months now and I'm impressed by the quality and freshness of everything I've purchased. The vegetables taste like they were picked that morning!",
-      name: "Sarah M.",
-      location: "Brooklyn, NY",
+      name: "Sarah Michel",
+      location: "Colombo, Sri Lanka",
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop"
     },
     {
       id: 2,
       text: "The platform makes it easy to support local farmers while getting better quality produce than the grocery store. I love the direct relationship with the people who grow my food.",
       name: "Michael T.",
-      location: "Manhattan, NY",
+      location: "Mathara, Sri Lanka",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&auto=format&fit=crop"
     },
     {
       id: 3,
       text: "As someone who values sustainability, UrbanFood has been a game-changer. I can now easily buy local, reduce packaging waste, and support small producers all in one place.",
-      name: "Jennifer W.",
-      location: "Queens, NY",
+      name: "Jennifer Winslet",
+      location: "Kandy, Sri Lanka",
       avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&auto=format&fit=crop"
     }
   ];

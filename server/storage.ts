@@ -269,9 +269,9 @@ export class MemStorage implements IStorage {
     // Add sample reviews
     const reviews = [
       { userId: 4, productId: 1, rating: 5, comment: "Excellent quality and freshness!" },
-      { userId: 1, productId: 2, rating: 4, comment: "Very good tomatoes, would buy again." },
+      { userId: 1, productId: 2, rating: 4, comment: "Very good Thambili, would buy again." },
       { userId: 2, productId: 3, rating: 5, comment: "The peppers were perfect for my recipe." },
-      { userId: 3, productId: 1, rating: 4, comment: "Great kale, very fresh." }
+      { userId: 3, productId: 1, rating: 4, comment: "Great kale, very fresh..." }
     ];
     
     reviews.forEach(review => this.createReview(review));

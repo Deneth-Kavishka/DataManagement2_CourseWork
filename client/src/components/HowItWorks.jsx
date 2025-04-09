@@ -1,4 +1,5 @@
 import { Search, ShoppingBag, Sparkles } from "lucide-react";
+import { Link } from "wouter";
 
 const HowItWorks = () => {
   return (
@@ -36,9 +37,11 @@ const HowItWorks = () => {
         </div>
         
         <div className="mt-10 text-center">
-          <button className="bg-primary hover:bg-primary-dark text-white font-medium px-6 py-3 rounded-lg transition shadow-sm">
+           <Link href="/products">
+           <button className="bg-primary hover:bg-primary-dark text-white font-medium px-6 py-3 rounded-lg transition shadow-sm">
             Get Started Today
           </button>
+          </Link>
         </div>
       </div>
     </section>
