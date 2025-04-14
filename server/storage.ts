@@ -3,8 +3,87 @@ import { mongoStorage } from './MongoStorage';
 import { oracleStorage } from './OracleStorage';
 //import { DatabaseStorage } from './DatabaseStorage';
 
+export interface ProductDetail {
+  ID: number;
+  NAME: string;
+  DESCRIPTION: string;
+  PRICE: number;
+  INVENTORY: number;
+  IMAGE_URL: string;
+  IS_ORGANIC: boolean;
+  IS_LOCAL: boolean;
+  IS_FRESH_PICKED: boolean;
+  WEIGHT_KG: number;
+  DIMENSIONS: string;
+  NUTRITIONAL_INFO: string;
+  CREATED_AT: Date;
+  UPDATED_AT: Date;
+  CATEGORY_ID: number;
+  CATEGORY_NAME: string;
+  VENDOR_ID: number;
+  VENDOR_NAME: string;
+  VENDOR_LOGO: string;
+}
+
+export interface OrderDetail {
+  ID: number;
+  USER_ID: number;
+  STATUS: string;
+  TOTAL: number;
+  SHIPPING_ADDRESS: string;
+  SHIPPING_CITY: string;
+  SHIPPING_STATE: string;
+  SHIPPING_POSTAL_CODE: string;
+  SHIPPING_COUNTRY: string;
+  SHIPPING_METHOD: string;
+  SHIPPING_FEE: number;
+  PAYMENT_METHOD: string;
+  PAYMENT_STATUS: string;
+  CREATED_AT: Date;
+  UPDATED_AT: Date;
+  USERNAME: string;
+  EMAIL: string;
+  FIRST_NAME: string;
+  LAST_NAME: string;
+  items?: OrderItem[];
+}
+
+export interface VendorDetail {
+  ID: number;
+  BUSINESS_NAME: string;
+  DESCRIPTION: string;
+  LOGO_URL: string;
+  ADDRESS: string;
+  CITY: string;
+  STATE: string;
+  POSTAL_CODE: string;
+  COUNTRY: string;
+  PHONE: string;
+  WEBSITE: string;
+  BUSINESS_EMAIL: string;
+  CREATED_AT: Date;
+  UPDATED_AT: Date;
+  USER_ID: number;
+  USERNAME: string;
+  EMAIL: string;
+  FIRST_NAME: string;
+  LAST_NAME: string;
+  products?: Product[];
+}
+
 // Interface for all storage operations
 export interface IStorage {
+
+  // New view methods
+  getProductDetails(): Promise<ProductDetail[]>;
+  getProductDetailById(id: number): Promise<ProductDetail | undefined>;
+  getOrderDetails(): Promise<OrderDetail[]>;
+  getOrderDetailsByUser(userId: number): Promise<OrderDetail[]>;
+  getOrderDetailById(id: number): Promise<OrderDetail | undefined>;
+  getVendorDetails(): Promise<VendorDetail[]>;
+  getVendorDetailById(id: number): Promise<VendorDetail | undefined>;
+  
+  
   // Optional initialization method (for database implementations)
   initialize?(): Promise<boolean>;
   // User operations

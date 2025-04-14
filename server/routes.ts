@@ -704,6 +704,108 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Product Details View
+  app.get("/api/product-details", async (req, res) => {
+    try {
+      const productDetails = await storage.getProductDetails();
+      res.json(productDetails);
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+      res.status(500).json({ message: "Failed to fetch product details" });
+    }
+  });
+
+  app.get("/api/product-details/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const productDetail = await storage.getProductDetailById(id);
+      
+      if (!productDetail) {
+        return res.status(404).json({ message: "Product detail not found" });
+      }
+      
+      res.json(productDetail);
+    } catch (error) {
+      console.error("Error fetching product detail:", error);
+      res.status(500).json({ message: "Failed to fetch product detail" });
+    }
+  });
+
+  // Order Details View
+  app.get("/api/order-details", async (req, res) => {
+    try {
+      const userId = req.query.userId ? parseInt(req.query.userId as string) : undefined;
+      
+      let orderDetails;
+      if (userId) {
+        orderDetails = await storage.getOrderDetailsByUser(userId);
+      } else {
+        orderDetails = await storage.getOrderDetails();
+      }
+      
+      res.json(orderDetails);
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+      res.status(500).json({ message: "Failed to fetch order details" });
+    }
+  });
+
+  app.get("/api/order-details/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const orderDetail = await storage.getOrderDetailById(id);
+      
+      if (!orderDetail) {
+        return res.status(404).json({ message: "Order detail not found" });
+      }
+      
+      // Get order items
+      const orderItems = await storage.getOrderItems(id);
+      
+      res.json({
+        ...orderDetail,
+        items: orderItems
+      });
+    } catch (error) {
+      console.error("Error fetching order detail:", error);
+      res.status(500).json({ message: "Failed to fetch order detail" });
+    }
+  });
+
+  // Vendor Details View
+  app.get("/api/vendor-details", async (req, res) => {
+    try {
+      const vendorDetails = await storage.getVendorDetails();
+      res.json(vendorDetails);
+    } catch (error) {
+      console.error("Error fetching vendor details:", error);
+      res.status(500).json({ message: "Failed to fetch vendor details" });
+    }
+  });
+
+  app.get("/api/vendor-details/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const vendorDetail = await storage.getVendorDetailById(id);
+      
+      if (!vendorDetail) {
+        return res.status(404).json({ message: "Vendor detail not found" });
+      }
+      
+      // Get products from this vendor
+      const products = await storage.getProductsByVendor(id);
+      
+      res.json({
+        ...vendorDetail,
+        products
+      });
+    } catch (error) {
+      console.error("Error fetching vendor detail:", error);
+      res.status(500).json({ message: "Failed to fetch vendor detail" });
+    }
+  });
+
+
   const httpServer = createServer(app);
 
   return httpServer;

@@ -204,6 +204,7 @@ export type OrderItem = typeof orderItems.$inferSelect;
 
 export type Review = z.infer<typeof reviewSchema>;
 
+
 // Relations
 export const usersRelations = relations(users, ({ one, many }) => ({
   vendor: one(vendors, {

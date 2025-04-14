@@ -85,14 +85,55 @@ export class OracleStorage implements IStorage {
       const result = await oracleDb.execute(
         `
         DECLARE
+          -- Declare a SYS_REFCURSOR to hold the result set from the stored procedure
+          -- SYS_REFCURSOR is a weakly typed cursor (does not require a fixed return type)
+          -- It acts like a pointer to a result set that can be passed between procedures/functions
+  
           p_cursor SYS_REFCURSOR;
+  
+          -- Variables to hold each row’s values when fetched from the cursor
+          v_id users.id%TYPE;
+          v_username users.username%TYPE;
+  
         BEGIN
+          -- Call the stored procedure that fills the cursor with data
           get_user_by_username(:username, p_cursor);
+  
+          -- Advanced loop: Fetch each row from the cursor one at a time
+          LOOP
+            -- FETCH reads the next row from the cursor into local variables
+            FETCH p_cursor INTO v_id, v_username;
+  
+            -- Exit the loop if there are no more rows to fetch
+            EXIT WHEN p_cursor%NOTFOUND;
+  
+            -- Optional: Output or process data here
+            -- Example: DBMS_OUTPUT.PUT_LINE('Fetched User: ID=' || v_id || ', Username=' || v_username);
+          END LOOP;
+  
+          -- Close the original cursor to release resources
+          CLOSE p_cursor;
+  
+          -- Reopen cursor to return full result set to Node.js
+          OPEN p_cursor FOR
+            SELECT * FROM users WHERE username = :username;
+  
+          -- Return the result set to the Node.js layer
           DBMS_SQL.RETURN_RESULT(p_cursor);
+  
+        EXCEPTION
+          WHEN OTHERS THEN
+            -- Handle any unexpected errors
+            DBMS_OUTPUT.PUT_LINE('Error in PL/SQL block: ' || SQLERRM);
+            -- Optionally re-raise if we want the calling system to know
+            RAISE;
         END;
         `,
-        { username }
+        { username },
+        { outFormat: oracleDb.OUT_FORMAT_OBJECT, resultSet: true }
       );
+      
+      
       
       if (!result.resultSet || result.resultSet.length === 0) {
         return undefined;
@@ -110,26 +151,63 @@ export class OracleStorage implements IStorage {
       const result = await oracleDb.execute(
         `
         DECLARE
-          p_cursor SYS_REFCURSOR;
+          -- Declare a user-defined strongly-typed REF CURSOR
+          p_cursor user_pkg.user_cursor;
+  
+          -- Variables to hold each field from the 'users' table row
+          v_user users%ROWTYPE;
+  
         BEGIN
+          -- Call stored procedure that returns a REF CURSOR
           get_user_by_email(:email, p_cursor);
+  
+          -- Advanced loop: Fetch rows from the cursor one by one
+          LOOP
+            FETCH p_cursor INTO v_user;
+            EXIT WHEN p_cursor%NOTFOUND;
+  
+            -- Optional: You can process data here before returning (e.g., filter, transform)
+            -- Example: DBMS_OUTPUT.PUT_LINE('Email: ' || v_user.email);
+          END LOOP;
+  
+          -- Close the original cursor (good practice after processing)
+          CLOSE p_cursor;
+  
+          -- Re-open a new SYS_REFCURSOR to send data back to Node.js
+          OPEN p_cursor FOR
+            SELECT * FROM users WHERE email = :email;
+  
+          -- Return the new cursor to the Node.js layer
           DBMS_SQL.RETURN_RESULT(p_cursor);
+
+               EXCEPTION
+          WHEN OTHERS THEN
+            -- Handle any unexpected errors
+            DBMS_OUTPUT.PUT_LINE('Error in PL/SQL block: ' || SQLERRM);
+            -- Optionally re-raise if we want the calling system to know
+            RAISE;
+        END;
+  
         END;
         `,
-        { email }
+        { email },
+        { outFormat: oracleDb.OUT_FORMAT_OBJECT, resultSet: true }
       );
-      
-      if (!result.resultSet || result.resultSet.length === 0) {
-        return undefined;
-      }
-      
-      return this.mapUserFromOracle(result.resultSet[0]);
+  
+      const resultSet = result.resultSet;
+      if (!resultSet) return undefined;
+  
+      const row = await resultSet.getRow(); // Expecting only one user
+      await resultSet.close();
+  
+      return row ? this.mapUserFromOracle(row) : undefined;
+  
     } catch (err) {
       console.error('Error getting user by email:', err);
       return undefined;
     }
   }
-
+  
   async getUserByVerificationToken(token: string): Promise<User | undefined> {
     try {
       const result = await oracleDb.execute(
@@ -335,6 +413,15 @@ export class OracleStorage implements IStorage {
             p_category_id => p_category_id
           );
           :category_id := p_category_id;
+
+               EXCEPTION
+          WHEN OTHERS THEN
+            -- Handle any unexpected errors
+            DBMS_OUTPUT.PUT_LINE('Error in PL/SQL block: ' || SQLERRM);
+            -- Optionally re-raise if we want the calling system to know
+            RAISE;
+        END;
+
         END;
         `,
         {
@@ -364,6 +451,13 @@ export class OracleStorage implements IStorage {
             p_description => :description,
             p_image_url => :imageUrl
           );
+               EXCEPTION
+          WHEN OTHERS THEN
+            -- Handle any unexpected errors
+            DBMS_OUTPUT.PUT_LINE('Error in PL/SQL block: ' || SQLERRM);
+            -- Optionally re-raise if we want the calling system to know
+            RAISE;
+        END;
         END;
         `,
         {
@@ -527,6 +621,7 @@ export class OracleStorage implements IStorage {
       return [];
     }
   }
+  
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     try {
@@ -644,6 +739,7 @@ export class OracleStorage implements IStorage {
       return false;
     }
   }
+  
 
   /***********************
    * Vendor Operations
@@ -772,6 +868,7 @@ export class OracleStorage implements IStorage {
       throw err;
     }
   }
+  
 
   async updateVendor(id: number, vendorUpdate: Partial<InsertVendor>): Promise<Vendor | undefined> {
     try {
@@ -1139,6 +1236,7 @@ export class OracleStorage implements IStorage {
         }
       );
       
+      
       // Get the review from Oracle (by querying the product's reviews)
       const reviewResult = await oracleDb.execute(
         `
@@ -1175,6 +1273,153 @@ export class OracleStorage implements IStorage {
     } catch (err) {
       console.error('Error deleting review:', err);
       return false;
+    }
+  }
+
+  
+
+  async getProductDetails(): Promise<ProductDetail[]> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM PRODUCT_DETAILS
+        ORDER BY ID
+        `
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return [];
+      }
+      
+      return result.resultSet.map(row => this.mapProductDetailFromOracle(row));
+    } catch (err) {
+      console.error('Error getting product details:', err);
+      return [];
+    }
+  }
+  
+  async getProductDetailById(id: number): Promise<ProductDetail | undefined> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM PRODUCT_DETAILS
+        WHERE ID = :id
+        `,
+        { id }
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return undefined;
+      }
+      
+      return this.mapProductDetailFromOracle(result.resultSet[0]);
+    } catch (err) {
+      console.error('Error getting product detail by ID:', err);
+      return undefined;
+    }
+  }
+  
+  async getOrderDetails(): Promise<OrderDetail[]> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM ORDER_DETAILS
+        ORDER BY ID DESC
+        `
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return [];
+      }
+      
+      return result.resultSet.map(row => this.mapOrderDetailFromOracle(row));
+    } catch (err) {
+      console.error('Error getting order details:', err);
+      return [];
+    }
+  }
+  
+  async getOrderDetailsByUser(userId: number): Promise<OrderDetail[]> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM ORDER_DETAILS
+        WHERE USER_ID = :userId
+        ORDER BY ID DESC
+        `,
+        { userId }
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return [];
+      }
+      
+      return result.resultSet.map(row => this.mapOrderDetailFromOracle(row));
+    } catch (err) {
+      console.error('Error getting order details by user ID:', err);
+      return [];
+    }
+  }
+  
+  async getOrderDetailById(id: number): Promise<OrderDetail | undefined> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM ORDER_DETAILS
+        WHERE ID = :id
+        `,
+        { id }
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return undefined;
+      }
+      
+      return this.mapOrderDetailFromOracle(result.resultSet[0]);
+    } catch (err) {
+      console.error('Error getting order detail by ID:', err);
+      return undefined;
+    }
+  }
+  
+  async getVendorDetails(): Promise<VendorDetail[]> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM VENDOR_DETAILS
+        ORDER BY ID
+        `
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return [];
+      }
+      
+      return result.resultSet.map(row => this.mapVendorDetailFromOracle(row));
+    } catch (err) {
+      console.error('Error getting vendor details:', err);
+      return [];
+    }
+  }
+  
+  async getVendorDetailById(id: number): Promise<VendorDetail | undefined> {
+    try {
+      const result = await oracleDb.execute(
+        `
+        SELECT * FROM VENDOR_DETAILS
+        WHERE ID = :id
+        `,
+        { id }
+      );
+      
+      if (!result.resultSet || result.resultSet.length === 0) {
+        return undefined;
+      }
+      
+      return this.mapVendorDetailFromOracle(result.resultSet[0]);
+    } catch (err) {
+      console.error('Error getting vendor detail by ID:', err);
+      return undefined;
     }
   }
 
@@ -1298,6 +1543,87 @@ export class OracleStorage implements IStorage {
       username: row.USERNAME // Additional field from join
     };
   }
+
+  /**
+ * Map Oracle result to ProductDetail
+ */
+private mapProductDetailFromOracle(row: any): ProductDetail {
+  return {
+    ID: row.ID,
+    NAME: row.NAME,
+    DESCRIPTION: row.DESCRIPTION,
+    PRICE: row.PRICE,
+    INVENTORY: row.INVENTORY,
+    IMAGE_URL: row.IMAGE_URL,
+    IS_ORGANIC: row.IS_ORGANIC === 1,
+    IS_LOCAL: row.IS_LOCAL === 1,
+    IS_FRESH_PICKED: row.IS_FRESH_PICKED === 1,
+    WEIGHT_KG: row.WEIGHT_KG,
+    DIMENSIONS: row.DIMENSIONS,
+    NUTRITIONAL_INFO: row.NUTRITIONAL_INFO,
+    CREATED_AT: new Date(row.CREATED_AT),
+    UPDATED_AT: new Date(row.UPDATED_AT),
+    CATEGORY_ID: row.CATEGORY_ID,
+    CATEGORY_NAME: row.CATEGORY_NAME,
+    VENDOR_ID: row.VENDOR_ID,
+    VENDOR_NAME: row.VENDOR_NAME,
+    VENDOR_LOGO: row.VENDOR_LOGO
+  };
+}
+
+/**
+ * Map Oracle result to OrderDetail
+ */
+private mapOrderDetailFromOracle(row: any): OrderDetail {
+  return {
+    ID: row.ID,
+    USER_ID: row.USER_ID,
+    STATUS: row.STATUS,
+    TOTAL: row.TOTAL,
+    SHIPPING_ADDRESS: row.SHIPPING_ADDRESS,
+    SHIPPING_CITY: row.SHIPPING_CITY,
+    SHIPPING_STATE: row.SHIPPING_STATE,
+    SHIPPING_POSTAL_CODE: row.SHIPPING_POSTAL_CODE,
+    SHIPPING_COUNTRY: row.SHIPPING_COUNTRY,
+    SHIPPING_METHOD: row.SHIPPING_METHOD,
+    SHIPPING_FEE: row.SHIPPING_FEE,
+    PAYMENT_METHOD: row.PAYMENT_METHOD,
+    PAYMENT_STATUS: row.PAYMENT_STATUS,
+    CREATED_AT: new Date(row.CREATED_AT),
+    UPDATED_AT: new Date(row.UPDATED_AT),
+    USERNAME: row.USERNAME,
+    EMAIL: row.EMAIL,
+    FIRST_NAME: row.FIRST_NAME,
+    LAST_NAME: row.LAST_NAME
+  };
+}
+
+/**
+ * Map Oracle result to VendorDetail
+ */
+private mapVendorDetailFromOracle(row: any): VendorDetail {
+  return {
+    ID: row.ID,
+    BUSINESS_NAME: row.BUSINESS_NAME,
+    DESCRIPTION: row.DESCRIPTION,
+    LOGO_URL: row.LOGO_URL,
+    ADDRESS: row.ADDRESS,
+    CITY: row.CITY,
+    STATE: row.STATE,
+    POSTAL_CODE: row.POSTAL_CODE,
+    COUNTRY: row.COUNTRY,
+    PHONE: row.PHONE,
+    WEBSITE: row.WEBSITE,
+    BUSINESS_EMAIL: row.BUSINESS_EMAIL,
+    CREATED_AT: new Date(row.CREATED_AT),
+    UPDATED_AT: new Date(row.UPDATED_AT),
+    USER_ID: row.USER_ID,
+    USERNAME: row.USERNAME,
+    EMAIL: row.EMAIL,
+    FIRST_NAME: row.FIRST_NAME,
+    LAST_NAME: row.LAST_NAME
+  };
+}
 }
 
 // Export the Oracle Storage implementation
